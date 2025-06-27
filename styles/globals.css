@@ -1,0 +1,65 @@
+/* ベースのリセット */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 背景・文字 */
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: sans-serif;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+/* 入力欄（テキスト、メール、パスワードなど） */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #fff;
+  margin-bottom: 12px;
+  transition: border 0.2s ease-in-out;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #00bcd4;
+  box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.3);
+}
+
+/* ボタン */
+button {
+  background-color: #00bcd4;
+  color: #fff;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #0097a7;
+}
+
+/* メッセージ */
+p {
+  margin-top: 10px;
+}
+
+/* エラーメッセージ */
+.error {
+  color: #ff6b6b;
+}
