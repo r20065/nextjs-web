@@ -16,5 +16,72 @@
 
 ---
 
-## 🗂️ ディレクトリ構成
+## ⚙️ 使用技術
+
+- **Next.js** – ReactベースのWebフレームワーク
+- **NextAuth.js** – セッションベースの認証
+- **Prisma** – DB操作用ORM
+- **SQLite** または PostgreSQL – ユーザーデータ保存
+- **bcrypt** – パスワードの安全なハッシュ化
+- **zxcvbn** – パスワード強度測定ライブラリ
+- **TypeScript** – 型安全なJavaScript
+
+---
+
+## 🔐 認証フローの概要
+
+1. ユーザーが `/signup` で登録（bcryptでハッシュ化しDB保存）
+2. 登録完了後、自動で `signIn()` が実行されセッション発行
+3. ログイン状態は `useSession()` で取得
+4. `/mypage`, `/change-pass` など認証が必要なページでは、未ログイン時に `/login` へ自動リダイレクト
+
+---
+
+## ✨ 画面別の役割
+
+### `/signup.tsx`
+- メール・パスワード・確認用パスワードを入力
+- zxcvbn で強度をチェック
+- 登録成功後、`signIn()` により自動ログイン＋ `/mypage` に遷移
+
+### `/login.tsx`
+- メール・パスワードでログイン
+- 成功すると `/mypage` に遷移
+
+### `/mypage.tsx`
+- ログイン中のユーザーのメール表示
+- ログアウトボタン、パスワード変更ボタン、アカウント削除ボタンを提供
+
+### `/change-pass.tsx`
+- 現在のパスワード確認＋新しいパスワード入力
+- bcrypt によるハッシュ更新
+- ログイン必須ページ
+
+---
+
+## 🔧 API ルート詳細
+
+### `/api/signup.ts`
+- `POST`：ユーザー新規登録（メール重複チェック・bcryptでパスワード保存）
+
+### `/api/change-password.ts`
+- `POST`：現在のパスワード検証後、新しいパスワードに変更
+
+### `/api/delete-account.ts`
+- `DELETE`：現在ログイン中のユーザーのアカウントを削除
+
+### `/api/auth/[...nextauth].ts`
+- NextAuth.js の設定
+- セッションの取得・維持を担当
+
+---
+
+## 🔢 Prisma モデル定義例
+
+```prisma
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}
 
